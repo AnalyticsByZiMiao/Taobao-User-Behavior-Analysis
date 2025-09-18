@@ -417,5 +417,7 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# 忽略原始数据目录
-data/raw
+# 忽略原始数据文件
+data/raw/*.csv
+# 如果你有其他需要忽略的文件类型，也可以一并添加，比如Tableau的临时文件
+*.twb
