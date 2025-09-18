@@ -32,17 +32,61 @@ FROM userbehavior;
 # 将Timestamp转化为正常的时间
 
 -- 在UserBehavior表中添加3个字段：Datetime, Date, Hour
-ALTER TABLE UserBehavior ADD Datetime VARCHAR(20);
-ALTER TABLE UserBehavior ADD Date VARCHAR(15);
-ALTER TABLE UserBehavior ADD Hour INT(5);
+ALTER TABLE UserBehavior 
+ADD Datetime VARCHAR(20);
+
+ALTER TABLE UserBehavior 
+ADD Date VARCHAR(15);
+
+ALTER TABLE UserBehavior 
+ADD Hour INT(5);
 
 #将时间戳转换成日常形式
-UPDATE userBehavior SET `datetime` = DATE_FORMAT(FROM_UNIXTIME(`timestamp`), '%Y-%m-%d %H:%i:%s');
+UPDATE userBehavior 
+SET `datetime` = DATE_FORMAT(FROM_UNIXTIME(`timestamp`), '%Y-%m-%d %H:%i:%s');
 
 #将时间戳转换成日期格式
-UPDATE UserBehavior SET date = DATE(from_unixtime(TIMESTAMP));
+UPDATE UserBehavior 
+SET date = DATE(from_unixtime(TIMESTAMP));
 
 #将时间戳转换成小时格式
-UPDATE UserBehavior SET hour = HOUR(from_unixtime(TIMESTAMP));
+UPDATE UserBehavior 
+SET hour = HOUR(from_unixtime(TIMESTAMP));
 
+# 05 查找和处理异常时间
 
+#查找是否存在异常时间
+SELECT date 
+FROM UserBehavior 
+WHERE date IS NOT NULL 
+ORDER BY date;  -- 顺序
+
+SELECT date 
+FROM UserBehavior 
+WHERE date IS NOT NULL 
+ORDER BY date DESC;  -- 逆序
+
+/*本文数据时间范围在2017-11-25和2017-12-03之间，可见存在不少在2017-11-25之前，和在2017-12-03之后的时间，属于异常值，要进行删除*/
+
+#删除字段之前先来个备份
+CREATE TABLE UserBehavior_origin 
+SELECT * 
+FROM UserBehavior;
+
+#检验备份是否成功
+SELECT * 
+FROM UserBehavior_origin 
+LIMIT 20;
+
+#删除时间异常值
+DELETE FROM UserBehavior
+ WHERE datetime < '2017-11-25';
+
+DELETE FROM UserBehavior 
+WHERE datetime > '2017-12-04';
+
+# 查询表的总行数
+SELECT COUNT(User_ID) AS total_rows 
+FROM UserBehavior;
+
+-- 预处理完成
