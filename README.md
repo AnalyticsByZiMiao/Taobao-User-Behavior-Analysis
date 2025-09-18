@@ -17,6 +17,6 @@ A data analysis project on Taobao user behavior using SQL and Tableau.
     mysql -u root -p --local-infile=1 taobao_user_behavior -e "LOAD DATA LOCAL INFILE '/你的路径/UserBehavior.csv' INTO TABLE user_behavior FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';"
     ```
 
-4.  **执行分析**：按顺序运行 `sql/` 目录下的 SQL 脚本。
+4.  **执行分析**：按顺序运行 sql/ 目录下的 SQL 脚本。
 
-5.  **可视化**：打开 `tableau/` 目录下的 Tableau 工作簿，连接至数据库或导出的 CSV 结果文件即可查看仪表板。
+5.  **可视化**：打开 tableau/ 目录下的 Tableau 工作簿，连接至数据库或导出的 CSV 结果文件即可查看仪表板。
