@@ -61,7 +61,7 @@
 
 ### (二) 分析框架
 
-<img src="../images/01 分析框架.png" alt="分析框架图" width="500" />
+<img src="../images/01 分析框架.png" alt="分析框架图" width="800" />
 
 ## 四 数据处理与分析
 
