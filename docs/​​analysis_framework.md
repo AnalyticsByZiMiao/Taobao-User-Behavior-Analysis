@@ -38,7 +38,7 @@
 | `user_id` | `BIGINT` | 匿名化处理的用户ID | `123456` |
 | `item_id` | `BIGINT` | 匿名化处理的商品ID | `233845` |
 | `category_id` | `BIGINT` | 匿名化处理的商品类目ID | `2520377` |
-| `behavior_type` | `VARCHAR(10)` | 用户行为类型<br>- `pv`: 商品详情页浏览<br>- `cart`: 将商品加入购物车<br>- `fav`: 收藏商品<br>- `buy`: 购买商品 | `"pv"` |
+| `behavior_type` | `VARCHAR(10)` | 用户行为类型<br>- pv: 商品详情页浏览<br>- cart : 将商品加入购物车<br>- fav: 收藏商品<br>- buy: 购买商品 | "pv" |
 | `timestamp` | `BIGINT` | 行为时间戳<br>(Unix时间戳，秒级) | `1512054127` |
 
 ---
