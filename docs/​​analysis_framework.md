@@ -61,6 +61,8 @@
 
 <img src="../images/01 分析框架.png" alt="分析框架图" width="800" />
 
+---
+
 ## 四、数据处理与分析
 **工具**：MySQL 8.0，Navicat Premium Lite 17 ，Tableau 2024.3，Excel。
 
@@ -76,7 +78,7 @@
 
 3. 导入100W条数据
 
-<img src="../images/07 导入100w条数据.png" alt="成功导入100w条数据" width="600" />
+<img src="../images/03 导入向导2.png" alt="导入100w条数据" width="600" />
 
 
 
