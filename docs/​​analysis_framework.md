@@ -70,7 +70,7 @@
 
 1. 在navicat中创建表格UB，命名字段
 
-<img src="../images/01 创建表结构.png" alt="创建表结果" width="500" />
+<img src="../images/01 创建表结构.png" alt="创建表结果" width="600" />
 
 
 
