@@ -23,7 +23,8 @@
 ---
 
 ## 二、数据说明
-**01 数据来源**：https://tianchi.aliyun.com/dataset/649
+**01 数据来源**：
+                https://tianchi.aliyun.com/dataset/649
 
 **02 数据规模**
 
@@ -75,6 +76,12 @@
 2. 开始导入数据
 
 <img src="../images/02 导入向导1.png" alt="数据导入向导" width="600" />
+
+3. 导入100W条数据
+
+<img src="../images/07 导入100w条数据.png" alt="成功导入100w条数据" width="600" />
+
+
 
 
 ## (一) 数据导入MySQL
