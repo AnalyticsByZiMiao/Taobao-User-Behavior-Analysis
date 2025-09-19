@@ -72,6 +72,9 @@
 
 <img src="../images/01 创建表结构.png" alt="创建表结果" width="600" />
 
+2. 开始导入数据
+
+<img src="../images/02 导入向导1.png" alt="数据导入向导" width="600" />
 
 
 ## (一) 数据导入MySQL
