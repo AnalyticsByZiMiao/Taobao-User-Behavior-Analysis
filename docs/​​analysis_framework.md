@@ -23,22 +23,22 @@
 ---
 
 ## 二 数据说明
-** 01 数据来源**：https://link.zhihu.com/?target=https%3A//tianchi.aliyun.com/dataset/dataDetail%3FdataId%3D649
+**01 数据来源**：https://link.zhihu.com/?target=https%3A//tianchi.aliyun.com/dataset/dataDetail%3FdataId%3D649
 
-** 02 数据规模**
+**02 数据规模**
 ​* **​原始数据量**​​：约1亿条用户行为记录
 
 ​* **​数据时间范围**​​：2017-11-25 至 2017-12-03（共9天）
 
 ​* **​数据大小**​​：约3.5GB（CSV格式）
 
-** 03 字段说明**
+**03 字段说明**
 | 字段名 | 数据类型 | 说明 | 示例 |
 | :--- | :--- | :--- | :--- |
 | `user_id` | `BIGINT` | 匿名化处理的用户ID | `123456` |
 | `item_id` | `BIGINT` | 匿名化处理的商品ID | `233845` |
 | `category_id` | `BIGINT` | 匿名化处理的商品类目ID | `2520377` |
-| `behavior_type` | `VARCHAR(10)` | 用户行为类型<br>- pv: 商品详情页浏览<br>- cart : 将商品加入购物车<br>- fav: 收藏商品<br>- buy: 购买商品 | "pv" |
+| `behavior_type` | `VARCHAR(10)` | 用户行为类型<br>- pv: 商品详情页浏览<br>- cart : 将商品加入购物车<br>- fav: 收藏商品<br>- buy: 购买商品 | `"pv"` |
 | `timestamp` | `BIGINT` | 行为时间戳<br>(Unix时间戳，秒级) | `1512054127` |
 
 ---
