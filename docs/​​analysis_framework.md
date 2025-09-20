@@ -20,10 +20,10 @@
 ---
 
 ## 二、数据说明
-**01 数据来源**：
+**1. 数据来源**：
                 https://tianchi.aliyun.com/dataset/649
 
-**02 数据规模**
+**2. 数据规模**
 
 * **原始数据量**：​​约1亿条用户行为记录
 
@@ -32,7 +32,7 @@
 * **数据大小**：约3.5GB（CSV格式）
 
 
-**03 字段说明**
+**3. 字段说明**
 | 字段名 | 数据类型 | 说明 | 示例 |
 | :--- | :--- | :--- | :--- |
 | `user_id` | `BIGINT` | 匿名化处理的用户ID | `123456` |
@@ -68,6 +68,8 @@
 
 阿里天池的这个数据集解压出来3+G，数据条多达1亿条，Excel无法打开，直接通过Navicat导入MySQL速度极为缓慢，加上设备性能限制，故随机选取100W条数据导入Navicat。将数据进行预处理后，再编写SQL进行数据分析，并连接Tableau对检索结果进行可视化呈现。
 
+## (一) 数据导入MySQL
+
 1. 在navicat中创建表格UserBehavior，并命名字段
 
 <img src="../images/01 创建表结构.png" alt="创建表结果" width="600" />
@@ -96,9 +98,27 @@ SELECT COUNT(User_ID) as total_rows FROM ub;
 
 可见，数据的总行数是1000000，导入完成。
 
-## (一) 数据导入MySQL
-
 ## (二) 数据预处理
+
+1. 处理重复值
+
+``` sql
+# 检查是否存在重复值，返回的结果就是重复值
+SELECT * ,
+       COUNT(*)
+FROM userbehavior
+GROUP BY User_ID,
+         Item_ID,
+         Category_ID,
+         Behavior_type,
+         Timestamp
+HAVING COUNT(*) > 1;
+```
+
+<img src="../images/10 检查重复值.png" alt="查看表" width="500" />
+
+2. 
+
 
 ## (三) 数据分析阶段
 
