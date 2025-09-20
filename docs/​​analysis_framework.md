@@ -313,7 +313,7 @@ GROUP BY DATE(Datetime);
 
 ```
 
-<img src="../images/16 创建视图1 每日活动汇总.png" alt="查询PV UV 平均访问时间" width="500" />
+<img src="../images/16 创建视图1 每日活动汇总.png" alt="每日活动汇总" width="800" />
 
 ``` sql
 
@@ -328,6 +328,8 @@ WHERE Behavior_type = 'pv'
 GROUP BY User_ID;
 
 ```
+
+<img src="../images/17 创建视图2  用户首次浏览行为.png" alt="用户首次浏览行为" width="800" />
 
 ``` sql
 
