@@ -254,11 +254,11 @@ WHERE datetime > '2017-12-04';
 
 ```
 
-<img src="../images/13 删除时间异常的行.png" alt="删除时间异常的值" width="600" />
+<img src="../images/13 删除时间异常的行.png" alt="删除时间异常的值" width="500" />
 
 删除异常值后，查询剩余的行数
 
-<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除时间异常的值" width="300" />
+<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除时间异常的值" width="400" />
 
 至此，数据预处理完成
 
