@@ -103,6 +103,7 @@ SELECT COUNT(User_ID) as total_rows FROM ub;
 1. 处理重复值
 
 ``` sql
+
 # 检查是否存在重复值，返回的结果就是重复值
 SELECT * ,
        COUNT(*)
@@ -113,12 +114,26 @@ GROUP BY User_ID,
          Behavior_type,
          Timestamp
 HAVING COUNT(*) > 1;
+
 ```
 
 <img src="../images/10 检查重复值.png" alt="查看表" width="500" />
 
-2. 
+可见，不存在重复值。
 
+2. 检查并处理缺失值，排除NULL值
+
+``` sql
+
+SELECT COUNT(User_ID),
+       COUNT(Item_ID),
+       COUNT(Category_ID),
+       COUNT(Behavior_type),
+       COUNT(Timestamp)
+FROM userbehavior;
+
+```
+<img src="../images/10 查询缺失值.png" alt="查看表" width="500" />
 
 ## (三) 数据分析阶段
 
