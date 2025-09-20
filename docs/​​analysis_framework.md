@@ -221,7 +221,46 @@ ORDER BY date DESC;  -- 逆序
 
 <img src="../images/12 查找异常时间-逆序.png" alt="按时间逆序排序的表" width="700" />
 
-数据时间范围应在2017-11-25和2017-12-03之间，可见存在不少在2017-11-25之前，或者在2017-12-03之后的时间，属于异常值，要进行删除：
+数据时间范围应在2017-11-25和2017-12-03之间，可见存在不少在2017-11-25之前，或者在2017-12-03之后的时间，属于异常值，需要删除：
+
+``` sql
+
+#删除字段之前先来个备份
+CREATE TABLE UserBehavior_origin 
+SELECT * 
+FROM UserBehavior;
+
+```
+
+``` sql
+
+#检验备份是否成功
+SELECT * 
+FROM UserBehavior_origin 
+LIMIT 20;
+
+```
+
+<img src="../images/12 查询备份是否成功.png" alt="按时间逆序排序的表" width="700" />
+
+``` sql
+
+#删除时间异常值
+DELETE FROM UserBehavior
+ WHERE datetime < '2017-11-25';
+
+DELETE FROM UserBehavior 
+WHERE datetime > '2017-12-04';
+
+```
+
+<img src="../images/13 删除时间异常的行.png" alt="删除时间异常的值" width="600" />
+
+删除异常值后，查询剩余的行数
+
+<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除时间异常的值" width="300" />
+
+至此，数据预处理完成
 
 ## (三) 数据分析阶段
 
