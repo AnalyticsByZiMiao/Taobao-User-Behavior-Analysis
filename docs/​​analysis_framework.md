@@ -276,4 +276,13 @@ WHERE datetime > '2017-12-04';
 
 ```
 
+``` sql 
+
+SELECT
+	COUNT(DISTINCT User_ID) AS 'UV',
+	COUNT(User_ID) AS 'PV',
+	COUNT(Behavior_type)/COUNT(DISTINCT User_ID) AS 'PV/UV'
+FROM UserBehavior WHERE Behavior_type = 'pv';
+
+```
 

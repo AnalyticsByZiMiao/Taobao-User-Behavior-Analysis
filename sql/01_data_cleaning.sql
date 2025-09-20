@@ -1,4 +1,4 @@
-# 该sql文件存储数据清洗阶段代码
+# 数据清洗和预处理
 
 # 01 查询表的总行数
 SELECT COUNT(User_ID) AS total_rows 
