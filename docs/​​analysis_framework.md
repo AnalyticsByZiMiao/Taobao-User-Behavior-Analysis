@@ -135,6 +135,54 @@ FROM userbehavior;
 ```
 <img src="../images/10 查询缺失值.png" alt="查看表" width="700" />
 
+可见，所有列的计数计算结果都是100W，故不存在缺失值。
+
+3. 时间处理，将时间戳转化为正常日期和时间
+
+时间戳Timestamp无法直接进行分析，需要利用from_unixtime()函数将时间戳转化成3列：日期和时间，日期，小时。
+
+``` sql
+
+# 将Timestamp转化为正常的时间
+
+-- 在UserBehavior表中添加3个字段：Datetime, Date, Hour
+ALTER TABLE UserBehavior 
+ADD Datetime VARCHAR(20);
+
+ALTER TABLE UserBehavior 
+ADD Date VARCHAR(15);
+
+ALTER TABLE UserBehavior 
+ADD Hour INT(5);
+
+```
+
+查询表数据
+
+``` sql
+
+# 查询实现时间转化后的表数据
+SELECT * FROM UserBehavior
+
+```
+
+<img src="../images/10 查询修改时间后的表数据.png" alt="查看表" width="700" />
+
+查看结果可见，转换已完成。
+
+删除 `timestamp` 字段
+
+``` sql 
+
+#删除timestamp字段
+ALTER TABLE ub drop timestamp;
+
+```
+
+<img src="../images/10 删除 timestamp后的表.png" alt="查看表" width="700" />
+
+查看结果可见，已删除 `timestamp`字段。
+
 ## (三) 数据分析阶段
 
 ### 01 整体情况概览

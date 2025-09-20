@@ -27,7 +27,7 @@ FROM userbehavior;
 /*5个计数值均为1000000，表示没有缺失值*/
 
 # 04 一致化处理
--- 时间戳Timestamp无法直接进行分析，需要利用from_unixtime()函数将其转化成3列：日期和时间，日期，小时
+-- 时间戳Timestamp无法直接进行分析，需要利用from_unixtime()函数时间戳其转化成3列：日期和时间，日期，小时
 
 # 将Timestamp转化为正常的时间
 
