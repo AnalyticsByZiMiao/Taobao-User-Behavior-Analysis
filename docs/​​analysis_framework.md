@@ -287,6 +287,6 @@ FROM UserBehavior WHERE Behavior_type = 'pv';
 
 ```
 
-<img src="../images/115 查询PV UV 平均访问深度.png" alt="查询PV UV 平均访问时间" width="400" />
+<img src="../images/15 查询PV UV 平均访问深度.png" alt="查询PV UV 平均访问时间" width="400" />
 
 可见，在九天统计周期内，在这抽取的约一百万条数据里，淘宝的总访问量达到将近90万，访客数多达9700人左右，平均访问深度约为92，即一个人大概访问了92个页面，可见淘宝流量优势之巨大。
