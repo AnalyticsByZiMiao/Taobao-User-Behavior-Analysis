@@ -307,7 +307,7 @@ SELECT
     DATE(Datetime) AS activity_date,
     COUNT(DISTINCT User_ID) AS daily_uv,
     COUNT(*) AS daily_pv
-FROM ub
+FROM UserBahavior
 WHERE Behavior_type = 'pv'
 GROUP BY DATE(Datetime);
 
@@ -323,7 +323,7 @@ SELECT
     User_ID,
     MIN(Datetime) AS first_browse_time,
     DATE(MIN(Datetime)) AS first_browse_date
-FROM ub 
+FROM UserBehavior
 WHERE Behavior_type = 'pv' 
 GROUP BY User_ID;
 
@@ -336,11 +336,21 @@ GROUP BY User_ID;
 -- 查询日增新用户数及占比
 SELECT
     fbv.first_browse_date AS 统计日期,
-    COUNT(*) AS 日增新用户数,
-    dasv.daily_uv AS 日均活跃用户数,
-    ROUND(COUNT(*) / dasv.daily_uv * 100, 2) AS 日新用户占比百分比
+    COUNT(fbv.User_ID) AS 日增新用户数,
+    dasv.daily_uv AS 日均UV,
+    dasv.daily_uv - COUNT(fbv.User_ID) AS 差额人数,
+    ROUND(COUNT(fbv.User_ID) / dasv.daily_uv * 100, 2) AS 日新用户占比百分比
 FROM user_first_browse_view fbv
-INNER JOIN daily_activity_summary_view dasv ON dasv.activity_date = fbv.first_browse_date
-GROUP BY fbv.first_browse_date;
+JOIN daily_activity_summary_view dasv ON dasv.activity_date = fbv.first_browse_date
+GROUP BY fbv.first_browse_date, dasv.daily_uv
+ORDER BY fbv.first_browse_date;
 
 ```
+
+<img src="../images/18 日增新用户数及其占比.png" alt="用户首次浏览行为" width="800" />
+
+
+<img src="../images/19 日新增用户及其占比图.png" alt="用户首次浏览行为" width="800" />
+
+由图可知，日增新用户占比在次日急剧下降，推测因为没有用户首次登录数据，将统计期的首日当作登录日显然是不准确的，但这也可以看出日增新用户占比是不断下降的，说明统计期内绝大部分用户都来自留存用户。
+
