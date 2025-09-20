@@ -258,7 +258,7 @@ WHERE datetime > '2017-12-04';
 
 删除异常值后，查询剩余的行数
 
-<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除时间异常的值" width="400" />
+<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除异常时间值后的总行数" width="400" />
 
 至此，数据预处理完成
 
@@ -278,6 +278,7 @@ WHERE datetime > '2017-12-04';
 
 ``` sql 
 
+-- 查询PV、UV、平均访问深度
 SELECT
 	COUNT(DISTINCT User_ID) AS 'UV',
 	COUNT(User_ID) AS 'PV',
@@ -286,3 +287,6 @@ FROM UserBehavior WHERE Behavior_type = 'pv';
 
 ```
 
+<img src="../images/115 查询PV UV 平均访问深度.png" alt="查询PV UV 平均访问时间" width="400" />
+
+可见，在九天统计周期内，在这抽取的约一百万条数据里，淘宝的总访问量达到将近90万，访客数多达9700人左右，平均访问深度约为92，即一个人大概访问了92个页面，可见淘宝流量优势之巨大。
