@@ -133,7 +133,7 @@ SELECT COUNT(User_ID),
 FROM userbehavior;
 
 ```
-<img src="../images/10 查询缺失值.png" alt="查看表" width="500" />
+<img src="../images/10 查询缺失值.png" alt="查看表" width="700" />
 
 ## (三) 数据分析阶段
 
