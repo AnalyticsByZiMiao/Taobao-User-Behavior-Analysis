@@ -94,7 +94,7 @@
 SELECT COUNT(User_ID) as total_rows FROM ub;
 
 ```
-<img src="../images/09 查询表总行数.png" alt="查看表" width="500" />
+<img src="../images/09 查询表总行数.png" alt="查看表总行数" width="500" />
 
 可见，数据的总行数是1000000，导入完成。
 
@@ -117,7 +117,7 @@ HAVING COUNT(*) > 1;
 
 ```
 
-<img src="../images/10 检查重复值.png" alt="查看表" width="500" />
+<img src="../images/10 检查重复值.png" alt="检查重复值" width="500" />
 
 可见，不存在重复值。
 
@@ -133,7 +133,7 @@ SELECT COUNT(User_ID),
 FROM userbehavior;
 
 ```
-<img src="../images/10 查询缺失值.png" alt="查看表" width="700" />
+<img src="../images/10 查询缺失值.png" alt="查找缺失值" width="700" />
 
 可见，所有列的计数计算结果都是100W，故不存在缺失值。
 
@@ -154,6 +154,18 @@ ADD Date VARCHAR(15);
 
 ALTER TABLE UserBehavior 
 ADD Hour INT(5);
+
+#将时间戳转换成日常形式
+UPDATE userBehavior 
+SET `datetime` = DATE_FORMAT(FROM_UNIXTIME(`timestamp`), '%Y-%m-%d %H:%i:%s');
+
+#将时间戳转换成日期格式
+UPDATE UserBehavior 
+SET date = DATE(from_unixtime(TIMESTAMP));
+
+#将时间戳转换成小时格式
+UPDATE UserBehavior 
+SET hour = HOUR(from_unixtime(TIMESTAMP));
 
 ```
 
@@ -182,6 +194,34 @@ ALTER TABLE ub drop timestamp;
 <img src="../images/10 删除 timestamp后的表.png" alt="查看表" width="700" />
 
 查看结果可见，已删除 `timestamp`字段。
+
+### 4. 查找是否存在异常时间
+
+``` sql
+
+#查找是否存在异常时间
+SELECT date 
+FROM UserBehavior 
+WHERE date IS NOT NULL 
+ORDER BY date;  -- 顺序
+
+```
+
+<img src="../images/11 查找异常时间-顺序.png" alt="按时间顺序排序的表" width="700" />
+
+
+``` sql
+
+SELECT date 
+FROM UserBehavior 
+WHERE date IS NOT NULL 
+ORDER BY date DESC;  -- 逆序
+
+```
+
+<img src="../images/12 查找异常时间-逆序.png" alt="按时间逆序排序的表" width="700" />
+
+数据时间范围应在2017-11-25和2017-12-03之间，可见存在不少在2017-11-25之前，或者在2017-12-03之后的时间，属于异常值，要进行删除：
 
 ## (三) 数据分析阶段
 
