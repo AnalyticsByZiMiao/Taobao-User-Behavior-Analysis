@@ -18,3 +18,13 @@ FROM user_first_browse_view fbv
 JOIN daily_activity_summary_view dasv ON dasv.activity_date = fbv.first_browse_date
 GROUP BY fbv.first_browse_date, dasv.daily_uv
 ORDER BY fbv.first_browse_date;
+
+-- 计算跳失率
+
+SELECT
+	COUNT(a.behavior_num) AS '只浏览一次的访问总数',
+	(SELECT count(Behavior_type) FROM UserBehavior WHERE Behavior_type = 'pv' ) AS '访问总数',
+	concat(ROUND((COUNT(a.behavior_num)/(SELECT COUNT(Behavior_type) FROM UserBehavior WHERE Behavior_type = 'pv')) * 100,2),'%') AS '跳失率'
+FROM
+	(SELECT User_ID, COUNT(Behavior_type) AS behavior_num
+	FROM UserBehavior WHERE Behavior_type = 'pv' GROUP BY User_ID HAVING COUNT(Behavior_type <= 1)) AS a;

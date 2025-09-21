@@ -358,11 +358,13 @@ ORDER BY fbv.first_browse_date;
 
 ``` 
 
-跳失率=只浏览了一个页面就离开的访问次数/该页面的全部访问次数
+跳失率 = 只浏览了一个页面就离开的访问次数/该页面的全部访问次数
 
 ```
 
 ``` sql
+
+-- 计算浏览次数、访问次数、跳失率
 
 SELECT
 	COUNT(a.behavior_num) AS '只浏览一次的访问总数',
@@ -377,5 +379,36 @@ FROM
 <img src="../images/20 跳失率.png" alt="跳失率" width="800" />
 
 #### 1.4 用户复购率
+
+``` 
+
+复购率 = 购买2次及以上 / 购买了1次的总人数
+
+```
+
+``` sql
+
+CREATE OR REPLACE VIEW user_purchase_count_view AS
+SELECT 
+    User_ID,
+    COUNT(*) AS '购物次数'
+    -- 移除了其他非聚合列，如 Item_ID, Category_ID 等
+FROM UserBehavior
+WHERE Behavior_type = 'buy' 
+GROUP BY User_ID;
+
+```
+
+<img src="../images/21 创建计算用户购物数的视图.png" alt="用户购买" width="800" />
+
+``` sql
+
+-- 计算复购率
+
+SELECT SUM(CASE WHEN 购物次数 > 1 THEN 1 ELSE 0 END)/COUNT(User_ID) AS '复购率' 
+FROM user_purchase_count_view;
+
+```
+
 
 
