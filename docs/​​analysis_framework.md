@@ -565,7 +565,7 @@ limit 10;
 
 ```
 
-<img src="../images/28 加购量top10商品品类.png" alt="收藏量top10商品品类" width="800" />
+<img src="../images/28 加购量top10商品品类.png" alt="加购量top10商品品类" width="800" />
 
 **头部集中效应​​**：
 
@@ -602,3 +602,5 @@ ORDER BY buy_category DESC
 limit 10;
 
 ```
+
+<img src="../images/29 购买量top10商品品类.png" alt="收藏量top10商品品类" width="800" />
