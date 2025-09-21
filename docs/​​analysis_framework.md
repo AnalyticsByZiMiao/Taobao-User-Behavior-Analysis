@@ -444,5 +444,6 @@ FROM daily_activity_summary_view;
 
 <img src="../images/23 日均UV和日均PV.png" alt="日均UV和日均PV" width="800" />
 
+<img src="../images/24 日均UV PV趋势图.png" alt="日均UV和日均PV" width="800" />
 
 从上图可见，日均指标PV和UV的变动趋势几近一致，在2017年11月25日到2017年12月01日都处在预期、平稳的范围里波动，但在统计时间的最后2天，PV和UV都较大幅度上升，推测是得益于双十二预热宣传活动，吸引了不少老顾客。
