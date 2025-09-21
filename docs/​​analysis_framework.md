@@ -354,3 +354,25 @@ ORDER BY fbv.first_browse_date;
 
 由图可知，日增新用户占比在次日急剧下降，推测因为没有用户首次登录数据，将统计期的首日当作登录日显然是不准确的，但这也可以看出日增新用户占比是不断下降的，说明统计期内绝大部分用户都来自留存用户。
 
+#### 1.3 跳失率
+
+``` 
+
+跳失率=只浏览了一个页面就离开的访问次数/该页面的全部访问次数
+
+```
+
+``` sql
+
+SELECT
+	COUNT(a.behavior_num) AS '只浏览一次的访问总数',
+	(SELECT count(Behavior_type) FROM UserBehavior WHERE Behavior_type = 'pv' ) AS '访问总数',
+	concat(ROUND((COUNT(a.behavior_num)/(SELECT COUNT(Behavior_type) FROM UserBehavior WHERE Behavior_type = 'pv')) * 100,2),'%') AS '跳失率'
+FROM
+	(SELECT User_ID, COUNT(Behavior_type) AS behavior_num
+	FROM UserBehavior WHERE Behavior_type = 'pv' GROUP BY User_ID HAVING COUNT(Behavior_type <= 1)) AS a;
+
+```
+
+<img src="../images/20 跳失率.png" alt="跳失率" width="800" />
+
