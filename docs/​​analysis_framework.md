@@ -490,6 +490,8 @@ limit 10;
 
 ```
 
+<img src="../images/26 浏览量top10商品品类.png" alt="浏览量top10商品品类" width="800" />
+
 ##### 3.2 收藏量前10的类目
 
 ``` sql
