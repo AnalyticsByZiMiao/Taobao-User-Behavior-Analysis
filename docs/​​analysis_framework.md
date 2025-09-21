@@ -410,5 +410,5 @@ FROM user_purchase_count_view;
 
 ```
 
-
-
+<img src="../images/22 计算复购率.png" alt="复购率" width="800" />
+"D:\MyProjects\Taobao-User-Behavior-Analysis\images\"
