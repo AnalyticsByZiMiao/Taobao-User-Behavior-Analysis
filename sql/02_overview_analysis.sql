@@ -28,3 +28,9 @@ SELECT
 FROM
 	(SELECT User_ID, COUNT(Behavior_type) AS behavior_num
 	FROM UserBehavior WHERE Behavior_type = 'pv' GROUP BY User_ID HAVING COUNT(Behavior_type <= 1)) AS a;
+
+-- 计算复购率
+
+SELECT SUM(CASE WHEN 购物次数 > 1 THEN 1 ELSE 0 END)/COUNT(User_ID) AS '复购率' 
+FROM user_purchase_count_view;
+
