@@ -72,15 +72,15 @@
 
 #### 1. 在navicat中创建表格UserBehavior，并命名字段
 
-<img src="../images/01 创建表结构.png" alt="创建表结果" width="800" />
+<img src="../images/01 创建表结构.png" alt="创建表结果" width="600" />
 
 #### 2. 开始导入数据
 
-<img src="../images/02 导入向导1.png" alt="数据导入向导" width="800" />
+<img src="../images/02 导入向导1.png" alt="数据导入向导" width="600" />
 
 #### 3. 导入100W条数据
 
-<img src="../images/03 导入向导2.png" alt="导入100w条数据" width="800" />
+<img src="../images/03 导入向导2.png" alt="导入100w条数据" width="600" />
 
 #### 4. 打开导入数据后的表格
 
@@ -94,7 +94,7 @@
 SELECT COUNT(User_ID) as total_rows FROM ub;
 
 ```
-<img src="../images/09 查询表总行数.png" alt="查看表总行数" width="800" />
+<img src="../images/09 查询表总行数.png" alt="查看表总行数" width="500" />
 
 可见，数据的总行数是1000000，导入完成。
 
@@ -117,7 +117,7 @@ HAVING COUNT(*) > 1;
 
 ```
 
-<img src="../images/10 检查重复值.png" alt="检查重复值" width="800" />
+<img src="../images/10 检查重复值.png" alt="检查重复值" width="500" />
 
 可见，不存在重复值。
 
@@ -133,7 +133,7 @@ SELECT COUNT(User_ID),
 FROM userbehavior;
 
 ```
-<img src="../images/10 查询缺失值.png" alt="查找缺失值" width="800" />
+<img src="../images/10 查询缺失值.png" alt="查找缺失值" width="700" />
 
 可见，所有列的计数计算结果都是100W，故不存在缺失值。
 
@@ -178,7 +178,7 @@ SELECT * FROM UserBehavior
 
 ```
 
-<img src="../images/10 查询修改时间后的表数据.png" alt="查看表" width="800" />
+<img src="../images/10 查询修改时间后的表数据.png" alt="查看表" width="700" />
 
 查看结果可见，转换已完成。
 
@@ -191,7 +191,7 @@ ALTER TABLE ub drop timestamp;
 
 ```
 
-<img src="../images/10 删除 timestamp后的表.png" alt="查看表" width="800" />
+<img src="../images/10 删除 timestamp后的表.png" alt="查看表" width="700" />
 
 查看结果可见，已删除 `timestamp`字段。
 
@@ -207,7 +207,7 @@ ORDER BY date;  -- 顺序
 
 ```
 
-<img src="../images/11 查找异常时间-顺序.png" alt="按时间顺序排序的表" width="800" />
+<img src="../images/11 查找异常时间-顺序.png" alt="按时间顺序排序的表" width="700" />
 
 
 ``` sql
@@ -219,7 +219,7 @@ ORDER BY date DESC;  -- 逆序
 
 ```
 
-<img src="../images/12 查找异常时间-逆序.png" alt="按时间逆序排序的表" width="800" />
+<img src="../images/12 查找异常时间-逆序.png" alt="按时间逆序排序的表" width="700" />
 
 数据时间范围应在2017-11-25和2017-12-03之间，可见存在不少在2017-11-25之前，或者在2017-12-03之后的时间，属于异常值，需要删除：
 
@@ -241,7 +241,7 @@ LIMIT 20;
 
 ```
 
-<img src="../images/12 查询备份是否成功.png" alt="按时间逆序排序的表" width="800" />
+<img src="../images/12 查询备份是否成功.png" alt="按时间逆序排序的表" width="700" />
 
 ``` sql
 
@@ -254,11 +254,11 @@ WHERE datetime > '2017-12-04';
 
 ```
 
-<img src="../images/13 删除时间异常的行.png" alt="删除时间异常的值" width="800" />
+<img src="../images/13 删除时间异常的行.png" alt="删除时间异常的值" width="500" />
 
 删除异常值后，查询剩余的行数
 
-<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除异常时间值后的总行数" width="800" />
+<img src="../images/14 删除时间异常值后剩余行数.png" alt="删除异常时间值后的总行数" width="400" />
 
 至此，数据预处理完成
 
@@ -287,7 +287,7 @@ FROM UserBehavior WHERE Behavior_type = 'pv';
 
 ```
 
-<img src="../images/15 查询PV UV 平均访问深度.png" alt="查询PV UV 平均访问时间" width="800" />
+<img src="../images/15 查询PV UV 平均访问深度.png" alt="查询PV UV 平均访问时间" width="500" />
 
 可见，在九天统计周期内，在这抽取的约一百万条数据里，淘宝的总访问量达到将近90万，访客数多达9700人左右，平均访问深度约为92，即一个人大概访问了92个页面，可见淘宝流量优势之巨大。
 
