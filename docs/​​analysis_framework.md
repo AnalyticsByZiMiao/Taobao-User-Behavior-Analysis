@@ -636,3 +636,27 @@ Top 3类目贡献 ​​62.5%​​ 交易量（4756105+4145813+1320293=16,889�
 <img src="../images/30 top 商品品类.png" alt="top商品品类" width="800" />
 
 由上图可见，点击、收藏、加购与购买量均在TOP10的商品有4756105、4145813、982926、4801426和1320293这5种商品类目，说明站内转化路径拥有较强的联系，且此5种商品可优先推广，但各环节间的转化率还待后续分析。
+
+
+##### 3.5 
+
+``` sql
+
+-- 查询每个用户的购买次数及对应商品数量
+SELECT 
+    purchase_count,
+    COUNT(User_ID) AS user_count,
+    SUM(purchase_count) AS total_items_purchased
+FROM (
+    SELECT 
+        User_ID,
+        COUNT(*) AS purchase_count
+    FROM UserBehavior
+    WHERE Behavior_type = 'buy'
+    GROUP BY User_ID
+) user_purchases
+GROUP BY purchase_count
+
+```
+
+#### 4. 

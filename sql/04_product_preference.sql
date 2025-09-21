@@ -40,3 +40,18 @@ WHERE Behavior_type='buy'
 GROUP BY category_ID 
 ORDER BY buy_category DESC 
 limit 10;
+
+-- 查询每个用户的购买次数及对应商品数量
+SELECT 
+    purchase_count,
+    COUNT(User_ID) AS user_count,
+    SUM(purchase_count) AS total_items_purchased
+FROM (
+    SELECT 
+        User_ID,
+        COUNT(*) AS purchase_count
+    FROM UserBehavior
+    WHERE Behavior_type = 'buy'
+    GROUP BY User_ID
+) user_purchases
+GROUP BY purchase_count
