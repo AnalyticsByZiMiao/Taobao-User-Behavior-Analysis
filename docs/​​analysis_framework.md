@@ -414,4 +414,34 @@ FROM user_purchase_count_view;
 
 由上结果可见，在这9天统计时间内，用户总体**复购率**达到了**66.21%**，而**跳失率**仅为**1.08%**，说明淘宝拥有足够的吸引力保留客户且客户忠诚度较高。可以进一步加大对客户忠诚度的培养，鼓励客户加大消费频率，比如推出如活动红包之类的措施。
 
-### 用户行为习惯分析
+### 2. 用户行为习惯分析
+
+#### 2.1 日均PV和日均UV
+
+``` sql
+
+-- 创建视图1：创建每日活动汇总视图
+CREATE OR REPLACE VIEW daily_activity_summary_view AS
+SELECT
+    DATE(Datetime) AS activity_date,
+    COUNT(DISTINCT User_ID) AS daily_uv,
+    COUNT(*) AS daily_pv
+FROM UserBehavior
+WHERE Behavior_type = 'pv'
+GROUP BY DATE(Datetime);
+
+```
+
+``` sql
+
+-- 查询日UV、PV
+SELECT activity_date AS date,
+       daily_uv AS '日均UV',
+       daily_pv AS '日均PV'
+FROM daily_activity_summary_view;
+
+```
+
+<img src="../images/23 日均UV和日均PV.png" alt="日均UV和日均PV" width="800" />
+
+<img src="../images/24 日均UV PV趋势图.png" alt="日均UV和日均PV 趋势图" width="800" />
