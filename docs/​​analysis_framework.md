@@ -468,3 +468,72 @@ ORDER BY Hour;
 由上图可见，一天中最为活跃的时段在19时-22时，最顶峰出现再21时，此时PV为75030，UV为6709，当然这仅仅是在一亿条数据里抽样100W条的结果。中午时段和下午时段10时-18时总体流量稳定，处于较高水平。早上1时-6时流量微弱，符合国人作息时间。
 
 由此可以洞察到，一天中的黄金宣传时间时在19时-22时左右，在此时段加大力度宣传，或者推出营销促销活动，或者开展直播宣传活动，都是不错的运营决策。
+
+#### 3. 用户商品偏好分析
+
+点击量、收藏量、加购量和购买量前10的商类目
+
+##### 3.1 点击量前10的类目
+
+``` sql
+
+-- 查询点击量前10的商类目
+
+SELECT 
+    Category_ID,
+    COUNT(*) as pv_category 
+FROM UserBehavior 
+WHERE Behavior_type='pv' 
+GROUP BY category_ID 
+ORDER BY pv_category DESC 
+limit 10;
+
+```
+
+##### 3.2 收藏量前10的类目
+
+``` sql
+
+-- 查询收藏量前10的商类目
+
+SELECT 
+    Category_ID,COUNT(*) as fav_category 
+FROM UserBehavior
+WHERE Behavior_type='fav' 
+GROUP BY category_ID
+ORDER BY fav_category DESC 
+limit 10;
+
+```
+
+##### 3.3 加购量前10的商类目
+
+``` sql
+
+-- 查询加购量前10的商类目
+
+SELECT 
+    Category_ID,COUNT(*) as cart_category 
+FROM UserBehavior
+WHERE Behavior_type='cart' 
+GROUP BY category_ID 
+ORDER BY cart_category DESC 
+limit 10;
+
+```
+
+##### 3.4 购买量前10的商类目
+
+``` sql
+
+-- 查询购买量前10的商类目
+
+SELECT 
+    Category_ID,COUNT(*) as buy_category 
+FROM UserBehavior
+WHERE Behavior_type='buy' 
+GROUP BY category_ID 
+ORDER BY buy_category DESC 
+limit 10;
+
+```

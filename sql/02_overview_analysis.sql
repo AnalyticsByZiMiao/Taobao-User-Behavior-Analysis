@@ -34,8 +34,3 @@ FROM
 SELECT SUM(CASE WHEN 购物次数 > 1 THEN 1 ELSE 0 END)/COUNT(User_ID) AS '复购率' 
 FROM user_purchase_count_view;
 
--- 查询日均UV、PV
-SELECT activity_date AS date,
-       daily_uv AS '日均UV',
-       daily_pv AS '日均PV'
-FROM daily_activity_summary_view;
