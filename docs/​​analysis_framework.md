@@ -445,3 +445,4 @@ FROM daily_activity_summary_view;
 <img src="../images/23 日均UV和日均PV.png" alt="日均UV和日均PV" width="800" />
 
 <img src="../images/24 日均UV PV趋势图.png" alt="日均UV和日均PV 趋势图" width="800" />
+
