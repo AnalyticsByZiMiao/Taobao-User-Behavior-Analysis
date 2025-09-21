@@ -376,3 +376,6 @@ FROM
 
 <img src="../images/20 跳失率.png" alt="跳失率" width="800" />
 
+#### 1.4 用户复购率
+
+
