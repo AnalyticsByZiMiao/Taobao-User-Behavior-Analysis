@@ -725,6 +725,7 @@ FROM user_behavior_totals_view;
 
 ```
 ##### 4.1 用户行为转化路径1：点击-加购-购买
+
 ``` sql
 -- 用户行为转化路径1：点击-加购-购买
 
@@ -778,6 +779,7 @@ FROM funnel_click_fav_purchase_view;
 
 <img src="../images/33 用户行为转化路径2：点击-收藏-购买.png" alt="点击-收藏-购买" width="800" />
 
+
 ##### 4.3 用户行为转化路径3：点击-收藏+加购-购买
 
 ```  sql
@@ -802,6 +804,8 @@ SELECT
 FROM funnel_click_engagement_purchase_view;
 
 ```
+
+<img src="../images/34 用户行为转化路径3：点击-收藏+加购-购买.png" alt="点击-收藏+加购-购买" width="800" />
 
 ##### 4.4 用户行为转化路径4：点击-直接购买
 
