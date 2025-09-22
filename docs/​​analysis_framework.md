@@ -670,4 +670,83 @@ GROUP BY purchase_count
 
 ```
 
-#### 4. 
+#### 4. 用户行为转化路径分析
+
+因为用户收藏和加购行为并无严格的先后顺序，故可以由以下4条路径分析用户行为转化：
+
+```
+
+用户站内路径1：点击-加购-购买
+用户站内路径2：点击-收藏-购买
+用户站内路径3：点击-收藏+加购-购买
+用户站内路径4：点击-购买
+
+```
+
+``` sql
+
+-- 创建视图5：用户路径分析视图-路径1：点击-加购-购买
+CREATE OR REPLACE VIEW funnel_click_cart_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_cart AS cart_count,
+    total_buy AS purchase_count,
+    ROUND(total_cart / total_pv * 100, 2) AS click_to_cart_rate,
+    ROUND(total_buy / total_cart * 100, 2) AS cart_to_purchase_rate
+FROM user_behavior_totals_view;
+
+-- 创建视图6：用户路径分析视图-路径2：点击-收藏-购买
+CREATE OR REPLACE VIEW funnel_click_fav_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_fav AS fav_count,
+    total_buy AS purchase_count,
+    ROUND(total_fav / total_pv * 100, 2) AS click_to_fav_rate,
+    ROUND(total_buy / total_fav * 100, 2) AS fav_to_purchase_rate
+FROM user_behavior_totals_view;
+
+-- 创建视图6：用户路径分析视图-路径3：点击-收藏+加购-购买
+CREATE OR REPLACE VIEW funnel_click_engagement_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_fav + total_cart AS engagement_count,
+    total_buy AS purchase_count,
+    ROUND((total_fav + total_cart) / total_pv * 100, 2) AS click_to_engagement_rate,
+    ROUND(total_buy / (total_fav + total_cart) * 100, 2) AS engagement_to_purchase_rate
+FROM user_behavior_totals_view;
+
+-- 创建视图6：用户路径分析视图-路径4：点击-购买（直接购买）
+CREATE OR REPLACE VIEW funnel_click_direct_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_buy AS purchase_count,
+    ROUND(total_buy / total_pv * 100, 2) AS click_to_purchase_rate
+FROM user_behavior_totals_view;
+
+```
+
+``` sql
+-- 用户行为转化路径1：点击-加购-购买
+
+SELECT 
+    '点击' AS 行为阶段,
+    click_count AS 数量,
+    NULL AS 转化率
+FROM funnel_click_cart_purchase_view
+UNION ALL
+SELECT 
+    '加购' AS 行为阶段,
+    cart_count AS 数量,
+    click_to_cart_rate AS 转化率
+FROM funnel_click_cart_purchase_view
+UNION ALL
+SELECT 
+    '购买' AS 行为阶段,
+    purchase_count AS 数量,
+    cart_to_purchase_rate AS 转化率
+FROM funnel_click_cart_purchase_view;
+
+``` 
+
+
+<img src="../images/32 用户行为转化路径1：点击-加购-购买.png" alt="点击-加购-购买" width="800" />

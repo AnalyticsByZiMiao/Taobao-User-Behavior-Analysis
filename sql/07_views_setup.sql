@@ -31,3 +31,51 @@ SELECT
 FROM UserBehavior
 WHERE Behavior_type = 'buy' 
 GROUP BY User_ID;
+
+-- 创建视图4：用户行为总量的汇总视图
+CREATE OR REPLACE VIEW user_behavior_totals_view AS
+SELECT 
+    SUM(CASE WHEN Behavior_type = 'pv' THEN 1 ELSE 0 END) AS total_pv,
+    SUM(CASE WHEN Behavior_type = 'fav' THEN 1 ELSE 0 END) AS total_fav,
+    SUM(CASE WHEN Behavior_type = 'cart' THEN 1 ELSE 0 END) AS total_cart,
+    SUM(CASE WHEN Behavior_type = 'buy' THEN 1 ELSE 0 END) AS total_buy
+FROM UserBehavior;
+
+-- 创建视图5：用户路径分析视图-路径1：点击-加购-购买
+CREATE OR REPLACE VIEW funnel_click_cart_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_cart AS cart_count,
+    total_buy AS purchase_count,
+    ROUND(total_cart / total_pv * 100, 2) AS click_to_cart_rate,
+    ROUND(total_buy / total_cart * 100, 2) AS cart_to_purchase_rate
+FROM user_behavior_totals_view;
+
+-- 创建视图6：用户路径分析视图-路径2：点击-收藏-购买
+CREATE OR REPLACE VIEW funnel_click_fav_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_fav AS fav_count,
+    total_buy AS purchase_count,
+    ROUND(total_fav / total_pv * 100, 2) AS click_to_fav_rate,
+    ROUND(total_buy / total_fav * 100, 2) AS fav_to_purchase_rate
+FROM user_behavior_totals_view;
+
+-- 创建视图6：用户路径分析视图-路径3：点击-收藏+加购-购买
+CREATE OR REPLACE VIEW funnel_click_engagement_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_fav + total_cart AS engagement_count,
+    total_buy AS purchase_count,
+    ROUND((total_fav + total_cart) / total_pv * 100, 2) AS click_to_engagement_rate,
+    ROUND(total_buy / (total_fav + total_cart) * 100, 2) AS engagement_to_purchase_rate
+FROM user_behavior_totals_view;
+
+-- 创建视图6：用户路径分析视图-路径4：点击-购买（直接购买）
+CREATE OR REPLACE VIEW funnel_click_direct_purchase_view AS
+SELECT 
+    total_pv AS click_count,
+    total_buy AS purchase_count,
+    ROUND(total_buy / total_pv * 100, 2) AS click_to_purchase_rate
+FROM user_behavior_totals_view;
+
