@@ -843,3 +843,49 @@ R值越小，最近一次消费时间间隔越近，用户价值越大
 F值越大，购买频率越高，用户价值越高
 
 ```
+##### 5.1 原始R、F值
+``` sql
+
+-- 创建视图7：计算每个用户的RFM模型中的R（最近一次消费时间间隔）和F（消费次数）指标​​
+CREATE OR REPLACE VIEW user_rf_analysis_view AS
+SELECT
+    User_ID,
+    DATEDIFF('2017-12-03', MAX(datetime)) AS R,
+    COUNT(*) AS F
+FROM UserBehavior
+WHERE Behavior_type = 'buy'
+GROUP BY User_ID
+ORDER BY R, F DESC;
+
+```
+
+``` sql
+
+-- 查询R和F
+
+SELECT *
+FROM user_rf_analysis_view;
+
+```
+
+
+<img src="../images/36 每个用户的R和F.png" alt="R和F" width="800" />
+
+##### 5.2 R、F的均值
+
+``` sql
+
+-- 求出R和F的均值
+
+SELECT 
+    AVG(R) AS AVG_R,
+    AVG( F) AS AVG_F 
+FROM user_rf_analysis_view;
+
+```
+<img src="../images/37 R和F的均值.png" alt="R和F的均值" width="800" />
+
+由上图可知：
+R 值平均值为 2.5241，R<2.5241 判定为R高，反之R低；
+F 值平均值为 3.0437，F>3.0437 判定为F高，反之F低。
+

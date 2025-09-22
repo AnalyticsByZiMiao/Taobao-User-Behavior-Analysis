@@ -79,3 +79,14 @@ SELECT
     ROUND(total_buy / total_pv * 100, 2) AS click_to_purchase_rate
 FROM user_behavior_totals_view;
 
+
+-- 创建视图7：计算每个用户的RFM模型中的R（最近一次消费时间间隔）和F（消费次数）指标​​
+CREATE OR REPLACE VIEW user_rf_analysis_view AS
+SELECT
+    User_ID,
+    DATEDIFF('2017-12-03', MAX(datetime)) AS R,
+    COUNT(*) AS F
+FROM UserBehavior
+WHERE Behavior_type = 'buy'
+GROUP BY User_ID
+ORDER BY R, F DESC;
