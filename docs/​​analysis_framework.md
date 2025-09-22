@@ -979,7 +979,7 @@ FROM user_consumption_level_view;
 
 ##### 5.6 构建RFM模型
 
-分层模型标准：
+用户价值判定方法：
 
 | 用户价值判定方法 | R高 | R低 |
 |----------------|-----|-----|
@@ -1005,4 +1005,19 @@ FROM user_consumption_level_view;
 ```
 
 <img src="../images/43 用户分层：RFM模型.png" alt="用户分层RFM模型" width="800" />
+
+根据用户价值判定结果，计算各用户群人数及所占比例：
+
+``` sql
+
+-- 计算各用户群人数及所占比例
+
+SELECT 
+    SUM(case WHEN 消费时间间隔='高' and 消费频率='高' then '1' END) as '价值用户数量',
+    SUM(case WHEN 消费时间间隔='高' and 消费频率='低' then '1' END) as '发展用户数量',
+    SUM(case WHEN 消费时间间隔='低' and 消费频率='高' then '1' END) as '保持用户数量',
+    SUM(case WHEN 消费时间间隔='低' and 消费频率='低' then '1' END) as '挽留用户数量'
+FROM user_consumption_level_view;
+
+```
 
