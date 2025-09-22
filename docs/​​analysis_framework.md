@@ -826,3 +826,4 @@ SELECT
 FROM funnel_click_direct_purchase_view;
 
 ```
+<img src="../images/35 用户行为转化路径4：点击-购买.png" alt="点击--购买" width="800" />
