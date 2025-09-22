@@ -974,3 +974,35 @@ SELECT *
 FROM user_consumption_level_view;
 
 ```
+
+<img src="../images/42 用户消费行为高低状态.png" alt="用户消费行为高低" width="800" />
+
+##### 5.6 构建RFM模型
+
+分层模型标准：
+
+| 用户价值判定方法 | R高 | R低 |
+|----------------|-----|-----|
+| **F高**        | 价值用户 | 保持用户 |
+| **F低**        | 发展用户 | 挽留用户 |
+
+``` sql
+
+SELECT 
+    User_ID,
+    消费时间间隔,
+    消费频率,
+    (
+        case 
+        when 消费时间间隔='高' and 消费频率='高' then '价值用户'
+        when 消费时间间隔='高' and 消费频率='低' then '发展用户'
+        when 消费时间间隔='低' and 消费频率='高' then '保持用户'
+        when 消费时间间隔='低' and 消费频率='低' then '挽留用户'
+        END
+    ) as '用户类型'
+FROM user_consumption_level_view;
+
+```
+
+<img src="../images/43 用户分层：RFM模型.png" alt="用户分层RFM模型" width="800" />
+
