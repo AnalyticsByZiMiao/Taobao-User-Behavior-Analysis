@@ -889,3 +889,77 @@ FROM user_rf_analysis_view;
 R 值平均值为 2.5241，R<2.5241 判定为R高，反之R低；
 F 值平均值为 3.0437，F>3.0437 判定为F高，反之F低。
 
+##### 5.3 二八法则下的R值/F值，以及R值/F值的中位数
+
+###### 不同R/F值对应人数及其占比
+
+``` sql
+
+-- 查询不同R值对应人数及其占比
+
+SELECT
+    R,
+    COUNT(*) AS R值对应人数,
+    COUNT(*) / (SELECT COUNT(*) FROM user_rf_analysis_view) AS 占比,
+    SUM(COUNT(*)) OVER (ORDER BY R) / (SELECT COUNT(*) FROM user_rf_analysis_view) AS 累计占比
+FROM user_rf_analysis_view
+GROUP BY R
+ORDER BY R;
+
+```
+
+<img src="../images/38 不同R值对应的人数及其占比.png" alt="不同R值对应的人数及其占比" width="800" />
+
+创建最近消费间隔 R 值的帕累托图：
+
+<img src="../images/40 不同R值对应的人数及其占比图.png" alt="不同R值对应的人数及其占比图" width="800" />
+
+由二八法则得，20% 的用户贡献 80% 的价值，R值 = 0 的用户人数占比超过20%，取R值取0，所有消费间隔大于0的判定R低，反之R高。
+
+而根据中位数，R值中位数=2，故当R值<2，判定R高，反之R低。
+
+``` sql
+
+-- 查询不同F值对应人数及其占比 
+
+SELECT
+    F,
+    COUNT(*) AS F值对应人数,
+    COUNT(*) / (SELECT COUNT(*) FROM user_rf_analysis_view) AS 占比,
+    SUM(COUNT(*)) OVER (ORDER BY F) / (SELECT COUNT(*) FROM user_rf_analysis_view) AS 累计占比
+FROM user_rf_analysis_view
+GROUP BY F
+ORDER BY F;
+
+```
+
+<img src="../images/39 不同F值对应的人数及其占比.png" alt="不同F值对应的人数及其占比" width="800" />
+
+创建消费频率 F 值的帕累托图：
+
+<img src="../images/41 不同F值对应的人数及其占比图.png" alt="不同F值对应的人数及其占比图" width="800" />
+
+根据二八法则得，F值定位在4，消费频率大于4的用户占比接近20%，故当F值>4，判定F高，反之F低。
+
+而根据中位数，F值中位数=2，故当F值>2，判定F高，反之F低。
+
+##### 5.4 确定R、F的临界值
+
+综上考虑，最终确定两个临界值分别是：R = 2 (中位数),F = 3.0437 (平均值)。
+
+故确定，当 R < 2 ，R高，反之R低；当 F > 3.0437，F高，反之F低。
+
+##### 5.5 判定用户的R值和F值高低
+
+``` sql
+
+CREATE or REPLACE view view_ub_7 as
+SELECT 
+    User_ID,
+    R,
+    F,
+	( CASE WHEN r < 2 THEN '高' ELSE '低' END ) AS '消费时间间隔',
+	( CASE WHEN f > 3.0437 THEN '高' ELSE '低' END ) AS '消费频率'
+FROM user_rf_analysis_view;
+
+```
