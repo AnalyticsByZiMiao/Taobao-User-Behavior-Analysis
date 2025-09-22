@@ -51,6 +51,7 @@ SELECT
     ROUND(total_buy / total_cart * 100, 2) AS cart_to_purchase_rate
 FROM user_behavior_totals_view;
 
+
 -- 创建视图6：用户路径分析视图-路径2：点击-收藏-购买
 CREATE OR REPLACE VIEW funnel_click_fav_purchase_view AS
 SELECT 
@@ -61,7 +62,8 @@ SELECT
     ROUND(total_buy / total_fav * 100, 2) AS fav_to_purchase_rate
 FROM user_behavior_totals_view;
 
--- 创建视图6：用户路径分析视图-路径3：点击-收藏+加购-购买
+
+-- 创建视图7：用户路径分析视图-路径3：点击-收藏+加购-购买
 CREATE OR REPLACE VIEW funnel_click_engagement_purchase_view AS
 SELECT 
     total_pv AS click_count,
@@ -71,7 +73,8 @@ SELECT
     ROUND(total_buy / (total_fav + total_cart) * 100, 2) AS engagement_to_purchase_rate
 FROM user_behavior_totals_view;
 
--- 创建视图6：用户路径分析视图-路径4：点击-购买（直接购买）
+
+-- 创建视图8：用户路径分析视图-路径4：点击-购买（直接购买）
 CREATE OR REPLACE VIEW funnel_click_direct_purchase_view AS
 SELECT 
     total_pv AS click_count,
@@ -80,7 +83,7 @@ SELECT
 FROM user_behavior_totals_view;
 
 
--- 创建视图7：计算每个用户的RFM模型中的R（最近一次消费时间间隔）和F（消费次数）指标​​
+-- 创建视图9：计算每个用户的RFM模型中的R（最近一次消费时间间隔）和F（消费次数）指标​​
 CREATE OR REPLACE VIEW user_rf_analysis_view AS
 SELECT
     User_ID,
@@ -90,3 +93,14 @@ FROM UserBehavior
 WHERE Behavior_type = 'buy'
 GROUP BY User_ID
 ORDER BY R, F DESC;
+
+
+-- 创建视图10：用户消费行为高低状态视图
+CREATE OR REPLACE VIEW user_consumption_level_view AS
+SELECT 
+    User_ID,
+    R,
+    F,
+    (CASE WHEN R < 2 THEN '高' ELSE '低' END) AS '消费时间间隔',
+    (CASE WHEN F > 3.0437 THEN '高' ELSE '低' END) AS '消费频率'
+FROM user_rf_analysis_view;
