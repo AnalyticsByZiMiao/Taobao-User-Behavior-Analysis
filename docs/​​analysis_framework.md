@@ -979,7 +979,6 @@ FROM user_consumption_level_view;
 
 ##### 5.6 构建RFM模型
 
-用户价值判定方法：
 
 | 用户价值判定方法 | R高 | R低 |
 |----------------|-----|-----|
@@ -987,6 +986,8 @@ FROM user_consumption_level_view;
 | **F低**        | 发展用户 | 挽留用户 |
 
 ``` sql
+
+-- 用户价值判定
 
 SELECT 
     User_ID,
@@ -1010,14 +1011,78 @@ FROM user_consumption_level_view;
 
 ``` sql
 
--- 计算各用户群人数及所占比例
+-- 计算各用户群人数
 
 SELECT 
     SUM(case WHEN 消费时间间隔='高' and 消费频率='高' then '1' END) as '价值用户数量',
     SUM(case WHEN 消费时间间隔='高' and 消费频率='低' then '1' END) as '发展用户数量',
     SUM(case WHEN 消费时间间隔='低' and 消费频率='高' then '1' END) as '保持用户数量',
     SUM(case WHEN 消费时间间隔='低' and 消费频率='低' then '1' END) as '挽留用户数量'
-FROM user_consumption_level_view;
+FROM user_consumption_level_view
 
 ```
 
+<img src="../images/44 计算各用户群人数.png" alt="各用户群人数" width="800" />
+
+``` sql
+
+-- 计算各用户群人数及所占比例
+SELECT 
+    用户价值,
+    用户数量,
+    CONCAT(ROUND(用户数量 * 100.0 / total_users, 2), '%') AS 用户占比
+FROM (
+    SELECT 
+        '价值用户' AS 用户价值,
+        COUNT(CASE WHEN 消费时间间隔='高' AND 消费频率='高' THEN 1 END) AS 用户数量
+    FROM user_consumption_level_view
+    
+    UNION ALL
+    
+    SELECT 
+        '发展用户' AS 用户价值,
+        COUNT(CASE WHEN 消费时间间隔='高' AND 消费频率='低' THEN 1 END) AS 用户数量
+    FROM user_consumption_level_view
+    
+    UNION ALL
+    
+    SELECT 
+        '保持用户' AS 用户价值,
+        COUNT(CASE WHEN 消费时间间隔='低' AND 消费频率='高' THEN 1 END) AS 用户数量
+    FROM user_consumption_level_view
+    
+    UNION ALL
+    
+    SELECT 
+        '挽留用户' AS 用户价值,
+        COUNT(CASE WHEN 消费时间间隔='低' AND 消费频率='低' THEN 1 END) AS 用户数量
+    FROM user_consumption_level_view
+) AS segments
+CROSS JOIN (
+    SELECT COUNT(*) AS total_users FROM user_consumption_level_view
+) AS total;
+
+```
+
+<img src="../images/46 各用户群人数及其占比饼图.png" alt="各用户群人数及其占比饼图" width="800" />
+
+由上图可见，挽留客户几近占比一半，市场潜力巨大，对于这部分用户群，可以推出打折促销活动，用相对较低价格吸引用户，或者给出购物优惠津贴，以唤醒他们的购买意愿。
+
+对于价值用户，可以推出会员服务，提高购物体验满意度，以保持其忠诚度，鼓励持续高频率消费。
+
+而发展用户和保持用户，可以进行针对个性化的精准营销活动，提高其消费频率，增加留存。
+
+## 五、 结论与建议
+
+本文运用MySQL抽样分析了淘宝平台从2017年11月25日到2017年12月03日的约100W条用户行为数据，从平台流量整体情况、用户行为习惯、用户商品偏好、用户行为转化路径、用户价值区分进行多角度分析，结合分析结果，给出如下建议：
+
+1. 平台每日流量巨大，平均访问深度较高，用户粘性大、跳失率极低。但在点击-加购&收藏环节出现巨大的流量流失，在此环节四条路径的最高转化率也不到10%，表明不少商品并没有对用户产生很大的吸引力，或者是商品界面元素分散，可以尝试优化商品界面，激发用户进一步收藏加购的欲望。
+
+2. 在一天24小时中，用户活跃的黄金时段处在19:00-22:00左右，此时段是流量巅峰时段，平台可加大力度在此时段进行流量变现或者是进行促销推销等活动。
+
+3. 热销商品（购买量TOP10）、热搜商品（点击量TOP10）等热门类型商品固然需要大力宣传，但根据商品购买次数显示，平台销售量不仅靠热门商品带动，更多还是依赖商品销售的长尾效应，所以也要兼顾相对冷门商品的销售等运营维护。
+
+4. 根据各用户价值划分结果，建议对不同价值区间用户针对性开展营销活动。
+核心价值用户消费次数多，消费频率大，可以推出会员服务，提高购物满意度，以保持其忠诚度，鼓励持续高频率消费；
+对于挽留用户可以试着推出打折促销活动，给出购物津贴，以唤醒他们的购物欲望；
+对于发展用户和保持用户，需进一步针对个性化的精准营销活动，提高其消费频率，增加留存。
