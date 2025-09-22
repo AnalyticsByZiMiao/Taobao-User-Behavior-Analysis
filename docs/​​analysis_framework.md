@@ -953,13 +953,24 @@ ORDER BY F;
 
 ``` sql
 
-CREATE or REPLACE view view_ub_7 as
+-- 创建用户消费行为高低状态视图
+
+CREATE OR REPLACE VIEW user_consumption_level_view AS
 SELECT 
     User_ID,
     R,
     F,
-	( CASE WHEN r < 2 THEN '高' ELSE '低' END ) AS '消费时间间隔',
-	( CASE WHEN f > 3.0437 THEN '高' ELSE '低' END ) AS '消费频率'
+    (CASE WHEN R < 2 THEN '高' ELSE '低' END) AS '消费时间间隔',
+    (CASE WHEN F > 3.0437 THEN '高' ELSE '低' END) AS '消费频率'
 FROM user_rf_analysis_view;
+
+```
+
+
+``` sql
+
+-- 查询用户消费行为高低状态
+SELECT *
+FROM user_consumption_level_view;
 
 ```
