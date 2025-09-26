@@ -372,7 +372,7 @@ SELECT
 	concat(ROUND((COUNT(a.behavior_num)/(SELECT COUNT(Behavior_type) FROM UserBehavior WHERE Behavior_type = 'pv')) * 100,2),'%') AS '跳失率'
 FROM
 	(SELECT User_ID, COUNT(Behavior_type) AS behavior_num
-	FROM UserBehavior WHERE Behavior_type = 'pv' GROUP BY User_ID HAVING COUNT(Behavior_type <= 1)) AS a;
+	FROM UserBehavior WHERE Behavior_type = 'pv' GROUP BY User_ID HAVING COUNT(Behavior_type) <= 1) AS a;
 
 ```
 
