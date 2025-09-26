@@ -91,7 +91,7 @@
 ```sql
 
 # 查询`UserBehavior`表总行数
-SELECT COUNT(User_ID) as total_rows FROM ub;
+SELECT COUNT(User_ID) as total_rows FROM UserBehavior;
 
 ```
 <img src="../images/09 查询表总行数.png" alt="查看表总行数" width="800" />
