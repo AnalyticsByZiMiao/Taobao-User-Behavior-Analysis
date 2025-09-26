@@ -685,6 +685,18 @@ GROUP BY purchase_count
 
 ``` sql
 
+-- 创建视图4：用户行为总量的汇总视图
+CREATE OR REPLACE VIEW user_behavior_totals_view AS
+SELECT 
+    SUM(CASE WHEN Behavior_type = 'pv' THEN 1 ELSE 0 END) AS total_pv,
+    SUM(CASE WHEN Behavior_type = 'fav' THEN 1 ELSE 0 END) AS total_fav,
+    SUM(CASE WHEN Behavior_type = 'cart' THEN 1 ELSE 0 END) AS total_cart,
+    SUM(CASE WHEN Behavior_type = 'buy' THEN 1 ELSE 0 END) AS total_buy
+FROM UserBehavior;
+
+```
+``` sql
+
 -- 创建视图5：用户路径分析视图-路径1：点击-加购-购买
 CREATE OR REPLACE VIEW funnel_click_cart_purchase_view AS
 SELECT 
@@ -705,7 +717,7 @@ SELECT
     ROUND(total_buy / total_fav * 100, 2) AS fav_to_purchase_rate
 FROM user_behavior_totals_view;
 
--- 创建视图6：用户路径分析视图-路径3：点击-收藏+加购-购买
+-- 创建视图7：用户路径分析视图-路径3：点击-收藏+加购-购买
 CREATE OR REPLACE VIEW funnel_click_engagement_purchase_view AS
 SELECT 
     total_pv AS click_count,
@@ -715,7 +727,7 @@ SELECT
     ROUND(total_buy / (total_fav + total_cart) * 100, 2) AS engagement_to_purchase_rate
 FROM user_behavior_totals_view;
 
--- 创建视图6：用户路径分析视图-路径4：点击-购买（直接购买）
+-- 创建视图8：用户路径分析视图-路径4：点击-购买（直接购买）
 CREATE OR REPLACE VIEW funnel_click_direct_purchase_view AS
 SELECT 
     total_pv AS click_count,
