@@ -187,7 +187,7 @@ SELECT * FROM UserBehavior
 ``` sql 
 
 #删除timestamp字段
-ALTER TABLE ub drop timestamp;
+ALTER TABLE UserBehavior drop timestamp;
 
 ```
 

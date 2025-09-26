@@ -68,7 +68,7 @@ ORDER BY date DESC;  -- 逆序
 
 /*本文数据时间范围在2017-11-25和2017-12-03之间，可见存在不少在2017-11-25之前，和在2017-12-03之后的时间，属于异常值，要进行删除*/
 
-#删除字段之前先来个备份
+#删除字段之前先备份
 CREATE TABLE UserBehavior_origin 
 SELECT * 
 FROM UserBehavior;
