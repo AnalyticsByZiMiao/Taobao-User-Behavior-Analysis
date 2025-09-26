@@ -78,6 +78,9 @@ SELECT *
 FROM UserBehavior_origin 
 LIMIT 20;
 
+#删除timestamp字段
+ALTER TABLE UserBehavior drop timestamp;
+
 #删除时间异常值
 DELETE FROM UserBehavior
  WHERE datetime < '2017-11-25';
