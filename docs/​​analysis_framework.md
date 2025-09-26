@@ -858,7 +858,7 @@ F值越大，购买频率越高，用户价值越高
 ##### 5.1 原始R、F值
 ``` sql
 
--- 创建视图7：计算每个用户的RFM模型中的R（最近一次消费时间间隔）和F（消费次数）指标​​
+-- 创建视图9：计算每个用户的RFM模型中的R（最近一次消费时间间隔）和F（消费次数）指标​​
 CREATE OR REPLACE VIEW user_rf_analysis_view AS
 SELECT
     User_ID,
